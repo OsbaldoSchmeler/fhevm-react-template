@@ -7,7 +7,9 @@
 
 A **universal SDK** for building privacy-preserving decentralized applications using **Fully Homomorphic Encryption (FHE)** with Zama's FHEVM. Framework-agnostic and developer-friendly, designed to make confidential smart contract development simple and intuitive.
 
-🌐 **[Live Demo](https://fhe-water-resource-manager.vercel.app/)** | 📖 **[Documentation](docs/)** | 🎥 **[Download Demo Video](demo.mp4)**
+🌐 **[Live Demo](https://fhe-water-resource-manager.vercel.app/)** | 📖 **[Documentation](docs/)**
+
+**📹 Demo Video**: `demo.mp4` - Download from repository to view (streaming not supported)
 
 **GitHub Repository**: [https://github.com/OsbaldoSchmeler/fhevm-react-template](https://github.com/OsbaldoSchmeler/fhevm-react-template)
 
@@ -206,24 +208,28 @@ const decrypted = await decrypt.user(result, { signer: wallet });
 
 ---
 
-## 📱 Next.js Example - Water Resource Management
+## 📱 Next.js Example - FHE Confidential Water Resource Management
 
 ### Live Demo
 
 **URL**: [https://fhe-water-resource-manager.vercel.app/](https://fhe-water-resource-manager.vercel.app/)
 **Status**: ✅ Live and operational
-**Features**: Full FHE integration with MetaMask support
+**Purpose**: Demonstrates **privacy-preserving water allocation** using FHEVM SDK
+**Features**: Full FHE integration with MetaMask support, confidential demand submission, encrypted allocation processing
 
 ### Video Demonstration
 
-**File**: `demo.mp4` (Download to view)
-**Note**: The video file must be downloaded to your local machine for viewing as direct streaming links are not supported.
+**📹 Video File**: `demo.mp4`
 
-**Download Instructions**:
-1. Navigate to this repository
-2. Locate `demo.mp4` in the root directory
-3. Click "Download" to save locally
-4. Open with your media player
+**Important**: The demo video **must be downloaded** to view. Streaming links are not supported.
+
+**How to Access**:
+1. Navigate to the GitHub repository root directory
+2. Locate the file named `demo.mp4`
+3. Click "Download" or "Download raw file" to save to your computer
+4. Open with your preferred media player (VLC, Windows Media Player, etc.)
+
+**Video Content**: Complete demonstration of FHEVM SDK usage through the confidential water resource management example, showcasing privacy-preserving water allocation, React hooks integration, and encrypted data processing.
 
 ### Run Locally
 
@@ -544,10 +550,10 @@ npm run compile
 
 ### Example Applications
 
-**FHE Water Resource Management**
+**FHE Confidential Water Resource Management - Privacy Water Allocation**
 - GitHub: [https://github.com/OsbaldoSchmeler/FHEWaterResourceManager](https://github.com/OsbaldoSchmeler/FHEWaterResourceManager)
 - Live Demo: [https://fhe-water-resource-manager.vercel.app/](https://fhe-water-resource-manager.vercel.app/)
-- Description: Privacy-preserving water allocation platform built with this SDK
+- Description: Confidential water resource allocation platform demonstrating privacy-preserving water distribution using this SDK. Features encrypted demand submission, fair allocation algorithms on encrypted data, and role-based access control.
 
 ### FHE Resources
 

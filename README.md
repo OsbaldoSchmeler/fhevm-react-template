@@ -124,25 +124,41 @@ This is a **monorepo** containing the SDK and example applications:
 ```
 fhevm-react-template/
 ├── packages/
-│   └── fhevm-sdk/              ← 📦 Core SDK Package
+│   └── fhevm-sdk/                           ← 📦 Core SDK Package
 │       ├── src/
-│       │   ├── index.ts        ← Main SDK (framework-agnostic)
-│       │   └── react.tsx       ← React Hooks
+│       │   ├── index.ts                     ← Main SDK (framework-agnostic)
+│       │   └── react.tsx                    ← React Hooks
 │       └── package.json
 │
 ├── examples/
-│   └── nextjs-water-management/   ← 🎯 Next.js Example
-│       ├── pages/
-│       │   └── index.tsx       ← Demo application
-│       ├── components/
-│       └── package.json
+│   ├── nextjs-water-management/             ← 🎯 Simple Next.js Example (Pages Router)
+│   │   ├── pages/
+│   │   │   └── index.tsx                    ← Basic SDK demo
+│   │   └── package.json
+│   │
+│   ├── nextjs-water-resource-management/    ← 🏆 Full Next.js Example (Pages Router)
+│   │   ├── pages/
+│   │   │   └── index.tsx                    ← Complete water management system
+│   │   └── package.json
+│   │
+│   ├── nextjs-fhe-app-router/               ← ⭐ App Router Example (Next.js 13+)
+│   │   ├── src/
+│   │   │   ├── app/                         ← App Router pages and API routes
+│   │   │   ├── components/                  ← React components
+│   │   │   ├── lib/                         ← FHE utilities
+│   │   │   └── hooks/                       ← Custom hooks
+│   │   └── package.json
+│   │
+│   └── water-resource-management/           ← 🌐 Vanilla HTML/JS Example
+│       ├── index.html                       ← Standalone web application
+│       └── README.md
 │
 ├── contracts/
-│   └── WaterResourceManager.sol   ← Example smart contract
+│   └── WaterResourceManager.sol             ← Example smart contract
 │
-├── docs/                       ← 📚 Complete documentation
-├── demo.mp4                    ← Video demonstration (download to view)
-└── README.md                   ← You are here
+├── docs/                                    ← 📚 Complete documentation
+├── demo.mp4                                 ← Video demonstration (download to view)
+└── README.md                                ← You are here
 ```
 
 ---
@@ -208,85 +224,275 @@ const decrypted = await decrypt.user(result, { signer: wallet });
 
 ---
 
-## 📱 Next.js Example - FHE Confidential Water Resource Management
+## 📱 Example Applications
 
-### Live Demo
+### 🎯 Example 1: Simple Next.js Demo
 
-**URL**: [https://fhe-water-resource-manager.vercel.app/](https://fhe-water-resource-manager.vercel.app/)
-**Status**: ✅ Live and operational
-**Purpose**: Demonstrates **privacy-preserving water allocation** using FHEVM SDK
-**Features**: Full FHE integration with MetaMask support, confidential demand submission, encrypted allocation processing
+**Location**: `examples/nextjs-water-management/`
 
-### Video Demonstration
+A minimal Next.js example demonstrating basic FHEVM SDK usage with React hooks.
 
-**📹 Video File**: `demo.mp4`
+**Features**:
+- ✅ Basic SDK initialization
+- ✅ Simple encryption demo
+- ✅ React hooks integration
+- ✅ Clean, educational code
 
-**Important**: The demo video **must be downloaded** to view. Streaming links are not supported.
-
-**How to Access**:
-1. Navigate to the GitHub repository root directory
-2. Locate the file named `demo.mp4`
-3. Click "Download" or "Download raw file" to save to your computer
-4. Open with your preferred media player (VLC, Windows Media Player, etc.)
-
-**Video Content**: Complete demonstration of FHEVM SDK usage through the confidential water resource management example, showcasing privacy-preserving water allocation, React hooks integration, and encrypted data processing.
-
-### Run Locally
-
+**Run Locally**:
 ```bash
 cd examples/nextjs-water-management
 npm install
 npm run dev
 ```
 
-Visit your browser
+Visit `http://localhost:3000`
 
-### Features Demonstrated
-
-- ✅ **Privacy-Preserving Forms** - Encrypt data before submission
-- ✅ **React Hooks Integration** - `useFHEVM`, `useEncrypt`, `useDecrypt`
-- ✅ **Real-time Status** - Loading states and error handling
-- ✅ **Type-Safe** - Full TypeScript support
-- ✅ **Responsive UI** - Tailwind CSS styling
-- ✅ **Water Management Use Case** - Real-world privacy application
-
-### Example Code
-
+**Code Example**:
 ```tsx
-// examples/nextjs-water-management/pages/index.tsx
-
 import { useFHEVM, useEncrypt } from 'fhevm-sdk/react';
 
 export default function WaterManagement() {
   const { isReady } = useFHEVM({ network: 'sepolia' });
   const { encryptUint32, isEncrypting } = useEncrypt();
 
-  const [waterDemand, setWaterDemand] = useState(1000);
-
-  const handleSubmit = async () => {
-    // Encrypt sensitive data
-    const encrypted = await encryptUint32(waterDemand);
-
-    // Send to smart contract (encrypted!)
-    await waterContract.submitRequest(encrypted);
-
-    // Other users CANNOT see your demand!
+  const handleEncrypt = async () => {
+    const encrypted = await encryptUint32(1000);
+    // Use encrypted data in contract calls
   };
 
   return (
-    <div>
-      <input
-        type="number"
-        value={waterDemand}
-        onChange={(e) => setWaterDemand(Number(e.target.value))}
-      />
-      <button onClick={handleSubmit} disabled={!isReady || isEncrypting}>
-        {isEncrypting ? 'Encrypting...' : 'Submit Request'}
-      </button>
-    </div>
+    <button onClick={handleEncrypt} disabled={!isReady || isEncrypting}>
+      {isEncrypting ? 'Encrypting...' : 'Encrypt Data'}
+    </button>
   );
 }
 ```
+
+---
+
+### 🏆 Example 2: Full Next.js Water Resource Management
+
+**Location**: `examples/nextjs-water-resource-management/`
+
+A **comprehensive production-ready** water resource management system showcasing the complete capabilities of FHEVM SDK.
+
+**Features**:
+- ✅ **Full FHE Integration** - Complete encryption/decryption workflow
+- ✅ **Multi-Role System** - Admin and region manager interfaces
+- ✅ **Privacy-Preserving Operations** - Encrypted water requests and allocations
+- ✅ **Real-time State Management** - Live blockchain monitoring
+- ✅ **Comprehensive UI** - Production-grade interface with Tailwind CSS
+- ✅ **Type-Safe** - Full TypeScript implementation
+- ✅ **Error Handling** - Robust error messages and loading states
+
+**Run Locally**:
+```bash
+cd examples/nextjs-water-resource-management
+npm install
+npm run dev
+```
+
+Visit `http://localhost:3001`
+
+**Key Functionality**:
+
+**Admin Functions**:
+- Register water management regions
+- Start allocation periods with time limits
+- Process encrypted allocation requests
+- Emergency water allocation
+- Region management
+
+**Manager Functions**:
+- Submit encrypted water requests
+- View region status
+- Check allocation results
+
+**Privacy Features**:
+- Encrypted water demand amounts
+- Confidential justification scores
+- FHE-based fair allocation
+- Selective result disclosure
+
+**Code Example**:
+```tsx
+import { useFHEVM, useEncrypt } from 'fhevm-sdk/react';
+
+export default function WaterResourceManagement() {
+  const { isReady } = useFHEVM({ network: 'sepolia' });
+  const { encryptUint32, isEncrypting } = useEncrypt();
+
+  const submitWaterRequest = async () => {
+    // Encrypt sensitive data using FHEVM SDK
+    const encryptedAmount = await encryptUint32(requestAmount);
+    const encryptedScore = await encryptUint32(justificationScore);
+
+    // Submit to smart contract (data remains encrypted!)
+    const tx = await contract.submitWaterRequest(
+      requestAmount,
+      justificationScore
+    );
+    await tx.wait();
+
+    // Other regions CANNOT see your request details!
+  };
+
+  return (
+    <button onClick={submitWaterRequest} disabled={!isReady || isEncrypting}>
+      {isEncrypting ? '🔐 Encrypting & Submitting...' : '🔒 Submit Encrypted Request'}
+    </button>
+  );
+}
+```
+
+---
+
+### 🌐 Example 3: Vanilla HTML/JS Water Resource Management
+
+**Location**: `examples/water-resource-management/`
+
+A **standalone HTML/JavaScript** implementation of the water resource management system, demonstrating that the SDK concepts work without frameworks.
+
+**Features**:
+- ✅ No build tools required
+- ✅ Pure HTML/CSS/JavaScript
+- ✅ Same functionality as Next.js version
+- ✅ Works with CDN-loaded libraries
+- ✅ Easy to understand and modify
+
+**Run Locally**:
+Simply open `index.html` in a web browser or use a simple HTTP server:
+```bash
+cd examples/water-resource-management
+python -m http.server 8000
+# Or use any other HTTP server
+```
+
+Visit `http://localhost:8000`
+
+**Live Demo**: [https://fhe-water-resource-manager.vercel.app/](https://fhe-water-resource-manager.vercel.app/)
+
+---
+
+### 📹 Video Demonstration
+
+**Video File**: `demo.mp4` (located in repository root)
+
+**Important**: The demo video **must be downloaded** to view. Streaming is not supported.
+
+**How to Access**:
+1. Navigate to the GitHub repository root directory
+2. Locate the file named `demo.mp4`
+3. Click "Download" or "Download raw file"
+4. Open with your media player (VLC, Windows Media Player, etc.)
+
+**Video Content**: Complete walkthrough of FHEVM SDK usage through the water resource management examples, including:
+- SDK initialization
+- Privacy-preserving water allocation
+- React hooks integration
+- Encrypted data processing
+- Admin and manager workflows
+
+---
+
+### ⭐ Example 4: Next.js App Router with Full FHE Architecture
+
+**Location**: `examples/nextjs-fhe-app-router/`
+
+A **modern Next.js 13+ App Router** implementation showcasing a complete, scalable FHE architecture with API routes, custom hooks, and production-ready components.
+
+**Features**:
+- ✅ **Next.js 14 App Router** - Modern React Server Components
+- ✅ **Complete Architecture** - Modular, scalable code structure
+- ✅ **API Routes** - RESTful endpoints for FHE operations
+- ✅ **Custom Hooks** - `useFHE`, `useEncryption`, `useComputation`
+- ✅ **UI Component Library** - Reusable Button, Input, Card components
+- ✅ **FHE Components** - Provider, demos, key manager
+- ✅ **Real-World Examples** - Banking and medical use cases
+- ✅ **Type-Safe** - Complete TypeScript implementation
+- ✅ **Production Patterns** - Best practices for scalability
+
+**Run Locally**:
+```bash
+cd examples/nextjs-fhe-app-router
+npm install
+npm run dev
+```
+
+Visit `http://localhost:3002`
+
+**Architecture Highlights**:
+
+**API Endpoints**:
+- `POST /api/fhe/encrypt` - Encrypt data
+- `POST /api/fhe/decrypt` - Decrypt ciphertext
+- `POST /api/fhe/compute` - Homomorphic computation
+- `POST /api/keys` - Key generation
+
+**Custom Hooks**:
+```tsx
+// FHE initialization
+const { isInitialized, initialize } = useFHE();
+
+// Encryption with loading states
+const { encryptWithSDK, encryptWithAPI, isEncrypting } = useEncryption();
+
+// Homomorphic computation
+const { compute, add, subtract, compare, result } = useComputation();
+```
+
+**Component Structure**:
+- **UI Components**: `Button`, `Input`, `Card`
+- **FHE Components**: `FHEProvider`, `EncryptionDemo`, `ComputationDemo`, `KeyManager`
+- **Examples**: `BankingExample`, `MedicalExample`
+
+**Code Example**:
+```tsx
+import { useEncryption } from '@/hooks/useEncryption';
+import { Button } from '@/components/ui/Button';
+
+function BankingApp() {
+  const { encryptWithSDK, isEncrypting } = useEncryption();
+
+  const handleDeposit = async (amount: number) => {
+    // Encrypt sensitive data
+    const encrypted = await encryptWithSDK(amount, 'uint32');
+
+    // Send to contract (encrypted!)
+    await contract.deposit(encrypted);
+  };
+
+  return (
+    <Button onClick={() => handleDeposit(1000)} isLoading={isEncrypting}>
+      Deposit Confidentially
+    </Button>
+  );
+}
+```
+
+---
+
+### 📊 Example Comparison
+
+| Feature | Simple Next.js | Full Next.js | App Router | Vanilla HTML/JS |
+|---------|---------------|--------------|------------|-----------------|
+| **Framework** | Pages Router | Pages Router | App Router | None |
+| **SDK Integration** | ✅ Basic | ✅ Complete | ✅ Complete | ✅ Conceptual |
+| **Production Ready** | ❌ Demo only | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Architecture** | Simple | Water Management | Full FHE Stack | Standalone |
+| **API Routes** | ❌ No | ❌ No | ✅ Yes | ❌ No |
+| **Custom Hooks** | ❌ No | ❌ No | ✅ Yes | ❌ No |
+| **UI Components** | Basic | Inline | ✅ Library | Inline |
+| **Real-World Examples** | ❌ No | ✅ Water | ✅ Banking + Medical | ✅ Water |
+| **TypeScript** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ JavaScript |
+| **Build Required** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No |
+| **Best For** | Learning | Production App | Scalable Apps | Prototyping |
+
+**Recommendation**:
+- **Just learning FHE?** → Start with Simple Next.js Example
+- **Building a specific app?** → Use Full Next.js Example
+- **Need scalable architecture?** → Use App Router Example ⭐
+- **No build tools?** → Use Vanilla HTML/JS Example
 
 ---
 

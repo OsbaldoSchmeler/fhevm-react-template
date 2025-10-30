@@ -127,31 +127,53 @@ fhevm-react-template/
 │   └── fhevm-sdk/                           ← 📦 Core SDK Package
 │       ├── src/
 │       │   ├── index.ts                     ← Main SDK (framework-agnostic)
-│       │   └── react.tsx                    ← React Hooks
-│       └── package.json
+│       │   ├── react.tsx                    ← React Hooks
+│       │   ├── core/                        ← Core FHEVM functionality
+│       │   ├── hooks/                       ← React hooks (useFhevm, etc.)
+│       │   ├── utils/                       ← Encryption/decryption utilities
+│       │   ├── types/                       ← TypeScript type definitions
+│       │   └── adapters/                    ← Framework adapters (React, Vue, Node.js)
+│       ├── package.json
+│       ├── README.md
+│       └── tsconfig.json
+│
+├── templates/                               ← 📋 Integration Templates
+│   ├── nextjs/                              ← Next.js integration guide
+│   ├── react/                               ← React integration guide
+│   ├── vue/                                 ← Vue integration guide
+│   ├── nodejs/                              ← Node.js integration guide
+│   └── README.md                            ← Templates overview
 │
 ├── examples/
-│   ├── nextjs-water-management/             ← 🎯 Simple Next.js Example (Pages Router)
+│   ├── nextjs-water-management/             ← 🎯 Simple Next.js Example (Port 3000)
 │   │   ├── pages/
 │   │   │   └── index.tsx                    ← Basic SDK demo
 │   │   └── package.json
 │   │
-│   ├── nextjs-water-resource-management/    ← 🏆 Full Next.js Example (Pages Router)
+│   ├── nextjs-water-resource-management/    ← 🏆 Full Next.js Example (Port 3001)
 │   │   ├── pages/
 │   │   │   └── index.tsx                    ← Complete water management system
 │   │   └── package.json
 │   │
-│   ├── nextjs-fhe-app-router/               ← ⭐ App Router Example (Next.js 13+)
-│   │   ├── src/
-│   │   │   ├── app/                         ← App Router pages and API routes
-│   │   │   ├── components/                  ← React components
-│   │   │   ├── lib/                         ← FHE utilities
-│   │   │   └── hooks/                       ← Custom hooks
+│   ├── water-resource-management/           ← 🌐 Converted React/Next.js App (Port 3002)
+│   │   ├── pages/
+│   │   │   └── index.tsx                    ← Converted from static HTML
+│   │   ├── index.html                       ← Original static version (preserved)
 │   │   └── package.json
 │   │
-│   └── water-resource-management/           ← 🌐 Vanilla HTML/JS Example
-│       ├── index.html                       ← Standalone web application
-│       └── README.md
+│   ├── WaterResourceManager/                ← 🌐 Converted React/Next.js App (Port 3003)
+│   │   ├── pages/
+│   │   │   └── index.tsx                    ← Converted from static HTML
+│   │   ├── index.html                       ← Original static version (preserved)
+│   │   └── package.json
+│   │
+│   └── nextjs-fhe-app-router/               ← ⭐ App Router Example (Port 3002)
+│       ├── src/
+│       │   ├── app/                         ← App Router pages and API routes
+│       │   ├── components/                  ← React components
+│       │   ├── lib/                         ← FHE utilities
+│       │   └── hooks/                       ← Custom hooks
+│       └── package.json
 │
 ├── contracts/
 │   └── WaterResourceManager.sol             ← Example smart contract
@@ -347,30 +369,32 @@ export default function WaterResourceManagement() {
 
 ---
 
-### 🌐 Example 3: Vanilla HTML/JS Water Resource Management
+### 🌐 Example 3: Water Resource Management (React/Next.js)
 
 **Location**: `examples/water-resource-management/`
 
-A **standalone HTML/JavaScript** implementation of the water resource management system, demonstrating that the SDK concepts work without frameworks.
+A **React/Next.js** implementation of the water resource management system, converted from the original static HTML version to provide a modern, maintainable codebase.
 
 **Features**:
-- ✅ No build tools required
-- ✅ Pure HTML/CSS/JavaScript
-- ✅ Same functionality as Next.js version
-- ✅ Works with CDN-loaded libraries
-- ✅ Easy to understand and modify
+- ✅ Full Next.js 14 with Pages Router
+- ✅ React hooks for state management
+- ✅ TypeScript for type safety
+- ✅ Same functionality as original HTML version
+- ✅ Production-ready structure
+- ✅ Hot reload development experience
 
 **Run Locally**:
-Simply open `index.html` in a web browser or use a simple HTTP server:
 ```bash
 cd examples/water-resource-management
-python -m http.server 8000
-# Or use any other HTTP server
+npm install
+npm run dev
 ```
 
-Visit `http://localhost:8000`
+Visit `http://localhost:3002`
 
 **Live Demo**: [https://fhe-water-resource-manager.vercel.app/](https://fhe-water-resource-manager.vercel.app/)
+
+**Note**: The original `index.html` static version is preserved in the directory for reference.
 
 ---
 
@@ -474,25 +498,25 @@ function BankingApp() {
 
 ### 📊 Example Comparison
 
-| Feature | Simple Next.js | Full Next.js | App Router | Vanilla HTML/JS |
-|---------|---------------|--------------|------------|-----------------|
-| **Framework** | Pages Router | Pages Router | App Router | None |
-| **SDK Integration** | ✅ Basic | ✅ Complete | ✅ Complete | ✅ Conceptual |
+| Feature | Simple Next.js | Full Next.js | Water Resource Mgmt | App Router |
+|---------|---------------|--------------|---------------------|------------|
+| **Framework** | Pages Router | Pages Router | Pages Router | App Router |
+| **SDK Integration** | ✅ Basic | ✅ Complete | ✅ Complete | ✅ Complete |
 | **Production Ready** | ❌ Demo only | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Architecture** | Simple | Water Management | Full FHE Stack | Standalone |
-| **API Routes** | ❌ No | ❌ No | ✅ Yes | ❌ No |
-| **Custom Hooks** | ❌ No | ❌ No | ✅ Yes | ❌ No |
-| **UI Components** | Basic | Inline | ✅ Library | Inline |
-| **Real-World Examples** | ❌ No | ✅ Water | ✅ Banking + Medical | ✅ Water |
-| **TypeScript** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ JavaScript |
-| **Build Required** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No |
-| **Best For** | Learning | Production App | Scalable Apps | Prototyping |
+| **Architecture** | Simple | Water Management | Water Management | Full FHE Stack |
+| **API Routes** | ❌ No | ❌ No | ❌ No | ✅ Yes |
+| **Custom Hooks** | ❌ No | ❌ No | React hooks | ✅ Yes |
+| **UI Components** | Basic | Inline | Inline | ✅ Library |
+| **Real-World Examples** | ❌ No | ✅ Water | ✅ Water | ✅ Banking + Medical |
+| **TypeScript** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Build Required** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Port** | 3000 | 3001 | 3002 | 3002 |
+| **Best For** | Learning | Production App | Production App | Scalable Apps |
 
 **Recommendation**:
 - **Just learning FHE?** → Start with Simple Next.js Example
-- **Building a specific app?** → Use Full Next.js Example
+- **Building a production app?** → Use Full Next.js Example or Water Resource Management
 - **Need scalable architecture?** → Use App Router Example ⭐
-- **No build tools?** → Use Vanilla HTML/JS Example
 
 ---
 
@@ -616,6 +640,46 @@ contract MyConfidentialContract {
 
 ---
 
+## 📋 Integration Templates
+
+Want to integrate FHEVM SDK into your existing project? Check out our **framework-specific templates**:
+
+### Available Templates
+
+| Framework | Template | Description |
+|-----------|----------|-------------|
+| **Next.js** | [templates/nextjs/](templates/nextjs/) | Complete Next.js integration guide with App Router & Pages Router examples |
+| **React** | [templates/react/](templates/react/) | React integration for CRA, Vite, and other React setups |
+| **Vue** | [templates/vue/](templates/vue/) | Vue 3 integration using Composition API composables |
+| **Node.js** | [templates/nodejs/](templates/nodejs/) | Backend services, CLI tools, and serverless functions |
+
+### Quick Template Access
+
+```bash
+# View Next.js template
+cat templates/nextjs/README.md
+
+# View React template
+cat templates/react/README.md
+
+# View Vue template
+cat templates/vue/README.md
+
+# View Node.js template
+cat templates/nodejs/README.md
+```
+
+Each template includes:
+- ✅ Installation instructions
+- ✅ Configuration examples
+- ✅ Code snippets
+- ✅ Best practices
+- ✅ Links to working examples
+
+**See [templates/README.md](templates/README.md) for complete overview**
+
+---
+
 ## 🎨 Use Cases
 
 ### 1. Confidential Voting
@@ -721,6 +785,7 @@ npm run compile
 | Document | Description |
 |----------|-------------|
 | **[README.md](README.md)** | This file - SDK overview |
+| **[templates/](templates/)** | Framework integration templates (Next.js, React, Vue, Node.js) |
 | **[SUBMISSION.md](SUBMISSION.md)** | Competition submission summary |
 | **[QUICK_START.md](QUICK_START.md)** | 5-minute quick start guide |
 | **[FINAL_CHECKLIST.md](FINAL_CHECKLIST.md)** | Requirements verification |
